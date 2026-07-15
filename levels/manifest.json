@@ -1,0 +1,85 @@
+{
+  "title": "Grok Prince",
+  "levels": [
+    {
+      "id": "level01",
+      "file": "levels/level01.json",
+      "name": "The Dungeon",
+      "index": 1
+    },
+    {
+      "id": "level02",
+      "file": "levels/level02.json",
+      "name": "The Catacombs",
+      "index": 2
+    },
+    {
+      "id": "level03",
+      "file": "levels/level03.json",
+      "name": "The Tower",
+      "index": 3
+    },
+    {
+      "id": "level04",
+      "file": "levels/level04.json",
+      "name": "The Throne Approach",
+      "index": 4
+    },
+    {
+      "id": "level05",
+      "file": "levels/level05.json",
+      "name": "Neon Streets",
+      "index": 5,
+      "theme": "modern"
+    },
+    {
+      "id": "level06",
+      "file": "levels/level06.json",
+      "name": "Metro Tunnels",
+      "index": 6,
+      "theme": "modern"
+    },
+    {
+      "id": "level07",
+      "file": "levels/level07.json",
+      "name": "Skyline Park",
+      "index": 7,
+      "theme": "modern"
+    },
+    {
+      "id": "level08",
+      "file": "levels/level08.json",
+      "name": "Corporate Spire",
+      "index": 8,
+      "theme": "modern"
+    },
+    {
+      "id": "level09",
+      "file": "levels/level09.json",
+      "name": "Hangar Bay",
+      "index": 9,
+      "theme": "ship"
+    },
+    {
+      "id": "level10",
+      "file": "levels/level10.json",
+      "name": "Bridge Core",
+      "index": 10,
+      "theme": "ship"
+    },
+    {
+      "id": "level11",
+      "file": "levels/level11.json",
+      "name": "Crash Site",
+      "index": 11,
+      "theme": "mars"
+    },
+    {
+      "id": "level12",
+      "file": "levels/level12.json",
+      "name": "Red Colony",
+      "index": 12,
+      "theme": "mars"
+    }
+  ]
+}

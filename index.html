@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Grok Prince — original 12-stage browser platformer inspired by Castlevania, Metroidvania, Prince of Persia–era cinematic platformers, and more. Castle, neon, starship, Mars." />
+  <title>Grok Prince</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      background:
+        radial-gradient(ellipse at 50% 30%, #1a1610 0%, #0a0a0c 70%);
+      color: #d4c4a8;
+      font-family: "Courier New", Courier, monospace;
+      overflow: auto;
+    }
+    #wrap {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px;
+    }
+    h1 {
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #c9a227;
+      font-weight: normal;
+      text-shadow: 0 0 20px rgba(201, 162, 39, 0.25);
+    }
+    #game {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      background: #000;
+      box-shadow:
+        0 0 0 1px #2a2010,
+        0 0 0 3px #c9a22744,
+        0 16px 48px rgba(0,0,0,0.7);
+      max-width: 100%;
+      height: auto;
+    }
+    #audio-toggles {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    #audio-toggles button,
+    #lb-submit {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      padding: 6px 14px;
+      cursor: pointer;
+      color: #d4c4a8;
+      background: #141210;
+      border: 1px solid #3a3228;
+      border-radius: 2px;
+      min-width: 108px;
+      transition: color 0.12s, border-color 0.12s, background 0.12s;
+    }
+    #audio-toggles button:hover,
+    #lb-submit:hover {
+      border-color: #c9a227;
+      color: #f0e0b0;
+    }
+    #audio-toggles button:focus-visible {
+      outline: 1px solid #c9a227;
+      outline-offset: 2px;
+    }
+    #audio-toggles button.off {
+      color: #5a5040;
+      border-color: #2a2418;
+      background: #0c0b0a;
+    }
+    #audio-toggles button.on {
+      border-color: #6a5820;
+      color: #c9a227;
+    }
+    #lb-panel {
+      width: min(420px, 100%);
+      background: #0e0c0a;
+      border: 1px solid #3a3228;
+      border-radius: 2px;
+      padding: 12px 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    #lb-panel[hidden] { display: none !important; }
+    #lb-panel h2 {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: #c9a227;
+      font-weight: normal;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    #lb-status {
+      font-size: 11px;
+      color: #a89878;
+      text-align: center;
+      margin-bottom: 10px;
+      line-height: 1.4;
+      min-height: 1.4em;
+    }
+    #lb-form {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    #lb-name {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      width: 160px;
+      color: #f0e0b0;
+      background: #141210;
+      border: 1px solid #5a4a28;
+      border-radius: 2px;
+    }
+    #lb-name:focus {
+      outline: 1px solid #c9a227;
+      border-color: #c9a227;
+    }
+    #lb-rules {
+      margin-top: 10px;
+      font-size: 10px;
+      color: #5a5040;
+      text-align: center;
+      line-height: 1.45;
+    }
+    #hint {
+      font-size: 11px;
+      color: #7a6e5a;
+      text-align: center;
+      line-height: 1.55;
+      max-width: 540px;
+    }
+    #hint kbd {
+      display: inline-block;
+      padding: 0 4px;
+      border: 1px solid #3a3228;
+      border-radius: 2px;
+      color: #a89878;
+      font-size: 10px;
+    }
+    #disclaimer {
+      font-size: 10px;
+      color: #4a4438;
+      text-align: center;
+      max-width: 540px;
+      line-height: 1.45;
+    }
+    #disclaimer a {
+      color: #8a7a50;
+      text-decoration: none;
+      border-bottom: 1px solid #3a3228;
+    }
+    #disclaimer a:hover {
+      color: #c9a227;
+      border-bottom-color: #c9a227;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <h1>Grok Prince</h1>
+    <canvas id="game" width="320" height="200" aria-label="Game canvas"></canvas>
+
+    <div id="lb-panel" hidden role="region" aria-label="Leaderboard entry">
+      <h2>LEADERBOARD</h2>
+      <p id="lb-status"></p>
+      <form id="lb-form" autocomplete="off">
+        <label for="lb-name" class="visually-hidden" style="position:absolute;left:-9999px">Prince name</label>
+        <input id="lb-name" name="name" maxlength="12" placeholder="PRINCE" spellcheck="false" />
+        <button type="submit" id="lb-submit">Submit time</button>
+      </form>
+      <p id="lb-rules">
+        Only <strong>full clean runs</strong> (stage 1 → 12, no cheats) are ranked.<br />
+        Using <kbd>+</kbd> life or <kbd>go1</kbd>–<kbd>go12</kbd> / cutscene cheats voids ranking.
+      </p>
+    </div>
+
+    <div id="audio-toggles" role="group" aria-label="Audio settings">
+      <button type="button" id="btn-music" class="on" aria-pressed="true">Music: On</button>
+      <button type="button" id="btn-sfx" class="on" aria-pressed="true">FX: On</button>
+    </div>
+    <p id="hint">
+      <kbd>←</kbd><kbd>→</kbd> run · <kbd>Shift</kbd>+dir careful · <kbd>↑</kbd> jump · <kbd>↓</kbd> crouch / <b>descend hatch</b><br />
+      Fight: near guard auto-draws · <kbd>Space</kbd>/<kbd>Z</kbd> slash · arrows advance/retreat · <kbd>Shift</kbd> parry<br />
+      <kbd>Enter</kbd> start · <kbd>P</kbd> pause · <kbd>R</kbd> restart · <code>?debug=1</code><br />
+      <strong>Leaderboard:</strong> finish all 12 stages without cheats · ranked by clear time
+    </p>
+    <p id="disclaimer">
+      Grok Prince is an <strong>original</strong> browser platformer. Graphics, audio, levels, and code are new.
+      Gameplay and mood are inspired by a mix of classic titles — including <em>Castlevania</em>, <em>Metroid</em> / Metroidvania exploration,
+      <em>Prince of Persia</em>–era cinematic platforming, and similar dungeon-and-sword adventures — not a remake or clone of any single game.
+      Not affiliated with, endorsed by, or related to the rights holders of those franchises.<br />
+      Open source:
+      <a href="https://github.com/LuisSanchez/grok-prince" target="_blank" rel="noopener noreferrer">github.com/LuisSanchez/grok-prince</a>
+    </p>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

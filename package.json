@@ -1,0 +1,16 @@
+{
+  "name": "grok-prince",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Grok Prince \u2014 original 12-stage browser platformer inspired by Castlevania, Metroidvania, Prince of Persia\u2013era cinematic platformers, and more",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "test": "node --test tests/collision.test.js tests/careful.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
